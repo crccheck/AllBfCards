@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html manifest="battleforge.manifest"><head>
+  <title>allbfcards.com - The Fast BattleForge Card search</title>
+  <meta name="description" content="An AJAX BattleForge Card search covering the Twilight, Renegade, Lost Souls, and Amii editions. Featuring fast searches and deck building.">
+  <meta name="keywords" content="BattleForge Battle Forge Card Database Search AJAX Google Docs Spreadsheet Deck Building Twilight Renegade Lost Souls Amii">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.js"></script>
+	<script type="text/javascript" src="battleforge.js"></script>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.1.0/build/cssreset/reset-min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+<!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+  <noscript>
+    <p>This site makes extensive use of JavaScript. HTML5 features are optional
+    but highly recommended. Some features of this site are not yet compatible
+    with Internet Explorer.</p>
+  </noscript>
+  <section id="toolbar" class="float">
+    <nav>
+      <small style="float:right;"><a href="?resetDB=1">reload card info</a></small>
+      <small style="float:right;"><a href="http://allbfcards.com">normal version</a></small>
+      <small style="float:right;"><a href="http://lite.allbfcards.com">lite version</a></small>
+    </nav>
+    <h1>allbfcards.com - The Fast BattleForge Card search (Beta)</h1>
+    <div id="help" style="display: none;">
+      <p>
+      </p>
+    </div>
+    <form>
+    <div style="position: relative; top: -9px;">
+      <label for="search-name">Search</label><br><input type="text" id="search-name"><br>
+      <label for="sort">Sort</label><br>
+      <select id="sort">
+        <option value="orb_n">Orb</option>
+        <option value="orb_id">Color</option>
+        <option value="type_id">Class</option>
+        <option value="cost">Power</option>
+        <option value="name" selected="selected">Alphabetical</option>
+        <option value="rarity">Rarity</option>
+        <option value="edition_id">Edition</option>
+        <option value="offense">Offense</option>
+        <option value="defense">Life Points</option>
+        <option value="category">Category</option>
+      </select>
+    </div>
+    <div id="method2">
+      <div id="era1" class="m2">
+        <label for="era10">None</label>
+        <input type="radio" name="era1" id="era10" class="none" value="0" checked="checked"><br>
+        <label for="era11">Fire</label>
+        <input type="radio" name="era1" id="era11" class="fire" value="8"><br>
+        <label for="era12">Shadow</label>
+        <input type="radio" name="era1" id="era12" class="shadow" value="4"><br>
+        <label for="era13">Frost</label>
+        <input type="radio" name="era1" id="era13" class="frost" value="2"><br>
+        <label for="era14">Nature</label>
+        <input type="radio" name="era1" id="era14" class="nature" value="1"><br>
+      </div>
+      <div id="era2" class="m2">
+        <label for="era20">None</label>
+        <input type="radio" name="era2" id="era20" class="none" value="0" checked="checked"><br>
+        <label for="era21">Fire</label>
+        <input type="radio" name="era2" id="era21" class="fire" value="8"><br>
+        <label for="era22">Shadow</label>
+        <input type="radio" name="era2" id="era22" class="shadow" value="4"><br>
+        <label for="era23">Frost</label>
+        <input type="radio" name="era2" id="era23" class="frost" value="2"><br>
+        <label for="era24">Nature</label>
+        <input type="radio" name="era2" id="era24" class="nature" value="1"><br>
+      </div>
+      <div id="era3" class="m2">
+        <label for="era30">None</label>
+        <input type="radio" name="era3" id="era30" class="none" value="0" checked="checked"><br>
+        <label for="era31">Fire</label>
+        <input type="radio" name="era3" id="era31" class="fire" value="8"><br>
+        <label for="era32">Shadow</label>
+        <input type="radio" name="era3" id="era32" class="shadow" value="4"><br>
+        <label for="era33">Frost</label>
+        <input type="radio" name="era3" id="era33" class="frost" value="2"><br>
+        <label for="era34">Nature</label>
+        <input type="radio" name="era3" id="era34" class="nature" value="1"><br>
+      </div>
+      <div id="era4" class="m2">
+        <label for="era40">None</label>
+        <input type="radio" name="era4" id="era40" class="none" value="0" checked="checked"><br>
+        <label for="era41">Fire</label>
+        <input type="radio" name="era4" id="era41" class="fire" value="8"><br>
+        <label for="era42">Shadow</label>
+        <input type="radio" name="era4" id="era42" class="shadow" value="4"><br>
+        <label for="era43">Frost</label>
+        <input type="radio" name="era4" id="era43" class="frost" value="2"><br>
+        <label for="era44">Nature</label>
+        <input type="radio" name="era4" id="era44" class="nature" value="1"><br>
+      </div>
+    </div>
+    <div id="method1" class="active">
+      <div class="m1">
+        <div id="orbSearch">
+          <label for="orb-fire">Fire</label><input id="orb-fire" type="checkbox" value="8" checked="checked"><br>
+          <label for="orb-shadow">Shadow</label><input id="orb-shadow" type="checkbox" value="4" checked="checked"><br>
+          <label for="orb-frost">Frost</label><input id="orb-frost" type="checkbox" value="2" checked="checked"><br>
+          <label for="orb-nature">Nature</label><input id="orb-nature" type="checkbox" value="1" checked="checked"><br>
+        </div>
+      </div>
+      <div class="m1">
+        <label for="orb-1">1 orb</label><input id="orb-1" type="checkbox" value="1" checked="checked"><br>
+        <label for="orb-2">2 orb</label><input id="orb-2" type="checkbox" value="2" checked="checked"><br>
+        <label for="orb-3">3 orb</label><input id="orb-3" type="checkbox" value="3" checked="checked"><br>
+        <label for="orb-4">4 orb</label><input id="orb-4" type="checkbox" value="4" checked="checked"><br>
+      </div>
+    </div>
+    <div>
+      <label for="type-u">Units</label><input id="type-u" type="checkbox" value="unit" checked="checked"><br>
+      <label for="type-b">Buildings</label><input id="type-b" type="checkbox" value="building" checked="checked"><br>
+      <label for="type-s">Spells</label><input id="type-s" type="checkbox" value="spell" checked="checked"><br>
+    </div>
+    <div>
+      <label for="rarity-c">Common</label><input id="rarity-c" type="checkbox" value="C" checked="checked"><br>
+      <label for="rarity-uc">Uncommon</label><input id="rarity-uc" type="checkbox" value="U" checked="checked"><br>
+      <label for="rarity-r">Rare</label><input id="rarity-r" type="checkbox" value="R" checked="checked"><br>
+      <label for="rarity-ur">Ultra Rare</label><input id="rarity-ur" type="checkbox" value="UR" checked="checked"><br>
+    </div>
+    <div id="editionSearch">
+      <label for="edition-twilight">Twilight</label><input id="edition-twilight" type="checkbox" value="1" checked="checked"><br>
+      <label for="edition-renegade">Renegade</label><input id="edition-renegade" type="checkbox" value="2" checked="checked"><br>
+      <label for="edition-lostsoul">Lost Souls</label><input id="edition-lostsoul" type="checkbox" value="4" checked="checked"><br>
+      <label for="edition-amii">Amii</label><input id="edition-amii" type="checkbox" value="8" checked="checked"><br>
+    </div>
+    <div class="radio">
+      <img src="img/ui_card_s_icon_attack_melee_better_against_s.png"><label for="offense-ms">Melee S</label><input id="offense-ms" type="checkbox" checked="checked">
+      <img src="img/ui_card_s_icon_attack_ranged_better_against_s.png"><label for="offense-rs">Ranged S</label><input id="offense-rs" type="checkbox" checked="checked"><br>
+      <img src="img/ui_card_s_icon_attack_melee_better_against_m.png"><label for="offense-mm">Melee M</label><input id="offense-mm" type="checkbox" checked="checked">
+      <img src="img/ui_card_s_icon_attack_ranged_better_against_m.png"><label for="offense-rm">Ranged M</label><input id="offense-rm" type="checkbox" checked="checked"><br>
+      <img src="img/ui_card_s_icon_attack_melee_better_against_l.png"><label for="offense-ml">Melee L</label><input id="offense-ml" type="checkbox" checked="checked">
+      <img src="img/ui_card_s_icon_attack_ranged_better_against_l.png"><label for="offense-rl">Ranged L</label><input id="offense-rl" type="checkbox" checked="checked"><br>
+      <img src="img/ui_card_s_icon_attack_melee_better_against_xl.png"><label for="offense-mxl">Melee XL</label><input id="offense-mxl" type="checkbox" checked="checked">
+      <img src="img/ui_card_s_icon_attack_ranged_better_against_xl.png"><label for="offense-rxl">Ranged XL</label><input id="offense-rxl" type="checkbox" checked="checked"><br>
+      <img src="img/ui_card_s_icon_attack_special.png"><label for="offense-special">Special</label><input id="offense-special" type="checkbox" checked="checked"><br>
+    </div>
+    <div class="radio">
+      <img src="img/ui_card_s_icon_heart_all.png"><img src="img/ui_card_s_icon_unit_size_s.png"><label for="defense-s">S</label><input id="defense-s" type="checkbox" checked="checked" value="s"><br>
+      <img src="img/ui_card_s_icon_heart_all.png"><img src="img/ui_card_s_icon_unit_size_m.png"><label for="defense-m">M</label><input id="defense-m" type="checkbox" checked="checked" value="m"><br>
+      <img src="img/ui_card_s_icon_heart_all.png"><img src="img/ui_card_s_icon_unit_size_l.png"><label for="defense-l">L</label><input id="defense-l" type="checkbox" checked="checked" value="l"><br>
+      <img src="img/ui_card_s_icon_heart_all.png"><img src="img/ui_card_s_icon_unit_size_xl.png"><label for="defense-xl">XL</label><input id="defense-xl" type="checkbox" checked="checked" value="xl"><br>
+    </div>
+    <div style="position: relative; top: -7px; text-align: center;">
+      <div id="cardCount">0</div>
+      <input id="resetSearch" class="bfWidget" type="reset" title="Reset">
+    </div>
+    </form>
+    <div id="toolbarControls">
+      <span id="attach" class="button">Attach</span>
+    </div>
+  </section>
+  <section id="main">
+    <div id="loading-cards" class="loading">Loading Cards</div>
+    <div id="loading-abilities" class="loading">Loading Card Abilities</div>
+    <div id="loading-loot" class="loading">Loading Loot</div>
+  </section>
+  <section id="decks">
+    <span class="button" id="addDeck">Add Deck</span>
+  </section>
+  <footer id="footer">
+    Legal: Images and card text are copyright Electronic Arts Inc.<br>
+    Contribute at: <a target="_blank" href="http://docs.google.com/leaf?id=0B3vTOLnTve5fMTZlZGNkNzYtZTQwYS00Y2NlLWI4ZjUtNTZmYzA1OGRiOTM3&amp;hl=en">Google Docs</a><br>
+    Discuss at: <a target="_blank" href="http://forums.battleforge.com/forum/showthread.php?t=39453">BattleForge Forums</a><br>
+  </footer>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-6535799-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body></html>

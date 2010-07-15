@@ -1,0 +1,517 @@
+/* HTML5 compatibility */
+nav, section, footer {
+  display: block;
+}
+
+html {
+  background-color: #222;
+}
+body {
+  color: white;
+  font-family: Arial;
+  margin: 0;
+  overflow-x: hidden;
+  padding: 0;
+}
+noscript {
+  z-index: 200;
+}
+
+h1 {
+  margin: 0;
+  font-size: 16px;
+}
+a {
+  text-decoration: none;
+  color: #367CDB;
+}
+small {
+  font-weight: normal;
+  margin: 0 1em;
+}
+#toolbar {
+  background-color: #0A0A0A;
+  background-color: rgba(10, 10, 10, 0.8);  /* FF3+, Saf3+, Opera 10.10+, Chrome */
+            filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#990A0A0A',EndColorStr='#990A0A0A'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#990A0A0A',EndColorStr='#990A0A0A')"; /* IE8 */
+  border-bottom: 1px solid #222;
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+#toolbar.float {
+  position: fixed;
+}
+#toolbarControls {
+  border-bottom: 1px solid #695A3E;
+  position: relative;
+}
+  #attach {
+    background: transparent url(img/btn_s_sortlist_small_down_up.png) no-repeat;
+    text-indent: -9999em;
+    text-align: left;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 0 0 4px 1em;
+    position: absolute;
+    bottom: 3px;
+    right: 8px;
+  }
+  #attach:hover {
+    background-image: url(img/btn_s_sortlist_small_down_over.png);
+  }
+  #attach:active {
+    background-image: url(img/btn_s_sortlist_small_down_down.png);
+  }
+  .float #attach{
+    background-image: url(img/btn_s_sortlist_small_up_up.png);
+  }
+  .float #attach:hover {
+    background-image: url(img/btn_s_sortlist_small_up_over.png);
+  }
+  .float #attach:active {
+    background-image: url(img/btn_s_sortlist_small_up_down.png);
+  }
+#toolbar > form {
+  margin: 0 1em;
+  white-space: nowrap;
+}
+#toolbar > form > div {
+  display: inline-block;
+}
+.button {
+  cursor: pointer;
+}
+.bfWidget {
+  border: 0 none;
+  margin: 0;
+  padding: 0;
+}
+  #resetSearch {
+    background:transparent url(img/btn_s_inventory_resetfilters_up.png) no-repeat;
+    border:0 none;
+    content: '';
+    height: 26px;
+    text-indent: -999em;
+    width: 33px;
+  }
+  #resetSearch:hover {
+    background-image:url(img/btn_s_inventory_resetfilters_over.png);
+  }
+  #resetSearch:active {
+    background-image:url(img/btn_s_inventory_resetfilters_down.png);
+  }
+  label {
+    font-weight: bold;
+    font-size: 12px;
+  }
+  input[type="text"],#sort {
+     -moz-border-radius: 3px; /* FF1+ */
+  -webkit-border-radius: 3px; /* Saf3+, Chrome */
+          border-radius: 3px; /* Opera 10.5, IE 9 */
+    background: #222;
+    border: 1px solid #cba455;
+    color: white;
+    font-size: 12px;
+    padding: 2px;
+  }
+  .active {
+    border-color: #5EEBCD !important;
+  }
+  #method1, #method2 {
+    border: 2px solid #244;
+    padding: 4px 0 0 4px;
+  }
+  .m1,.m2 {
+    display: inline-block;
+  }
+  #era1 > input, #era2 > input, #era3 > input, #era4 > input {
+    background: transparent url(img/btn_s_inventory_sort_power_fire_up.png) no-repeat;
+    margin: 0;
+    padding: 0;
+  }
+  #sort > option {
+    border: 0 none;
+    background: rgba(0,0,0,0.5);
+    text-align: center;
+  }
+  #cardCount {
+    background: transparent url(img/btn_m_inventory_search_up.png) no-repeat;
+    width: 64px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+  }
+#main {
+  border: 2px solid #444;
+  margin: 12em 1em 1em;
+  min-height: 500px;
+  background: black;
+}
+
+.loading {
+  color: white;
+  background: #333;
+  text-align: center;
+  margin: 20px auto;
+  font-size: 20px;
+  width: 800px;
+}
+.card {
+  background: transparent url(img/ui_card_250_frame_neutral_small.jpg) scroll no-repeat 50% 50%;
+  display: inline-block;
+  height: 270px;
+  width: 197px;
+  position: relative;
+}
+.card.fire {
+  background-image: url(img/ui_card_250_frame_fire_small.jpg);
+}
+.card.shadow {
+  background-image: url(img/ui_card_250_frame_shadow_small.jpg);
+}
+.card.frost {
+  background-image: url(img/ui_card_250_frame_frost_small.jpg);
+}
+.card.nature {
+  background-image: url(img/ui_card_250_frame_nature_small.jpg);
+}
+.card.twilight {
+  background-image: url(img/ui_card_250_frame_firenature_small.jpg);
+}
+.card.bandit {
+  background-image: url(img/ui_card_250_frame_fireshadow_small.jpg);
+}
+.card.stonekin {
+  background-image: url(img/ui_card_250_frame_frostnature_small.jpg);
+}
+.card.lostsoul {
+  background-image: url(img/ui_card_250_frame_shadowfrost_small.jpg);
+}
+.card > img {
+  position: absolute;
+  z-index: 2;
+}
+.card > .overlay {
+  height: 270px;
+  position: absolute;
+  width: 197px;
+  z-index: 3;
+}
+.card.tapped > .overlay {
+     -moz-outline-radius: 18px;
+  -webkit-border-radius: 18px;
+  -webkit-outline-radius: 18px;
+          outline-radius: 18px;
+  outline: 2px solid yellow;
+}
+.card > .name {
+  font-size: 12px;
+  left: 28px;
+  position: absolute;
+  top: 10px;
+}
+.card > .cost {
+  font-size: 10px;
+  left: 165px;
+  position: absolute;
+  top: 13px;
+}
+.card > .orbs {
+     -moz-border-radius: 5px; /* FF1+ */
+  -webkit-border-radius: 5px; /* Saf3+, Chrome */
+          border-radius: 5px; /* Opera 10.5, IE 9 */
+  background-color: #000000;
+  background-color: rgba(0, 0, 0, 0.7);  /* FF3+, Saf3+, Opera 10.10+, Chrome */
+            filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#B2000000',EndColorStr='#B2000000'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#B2000000',EndColorStr='#B2000000')"; /* IE8 */
+  border: 2px solid transparent;
+  display: block;
+  height: 10px;
+  left: 144px;
+  font-size: 1px;
+  position: absolute;
+  text-align: right;
+  top: 26px;
+  width: 40px;
+}
+.card > .orbs.fire {
+  border-color: red;
+}
+.card > .orbs.shadow {
+  border-color: #b207ff;
+}
+.card > .orbs.frost {
+  border-color: #3d91f5;
+}
+.card > .orbs.nature {
+  border-color: #80d133;
+}
+.card > .orbs > * {
+     -moz-border-radius: 4px; /* FF1+ */
+  -webkit-border-radius: 4px; /* Saf3+, Chrome */
+          border-radius: 4px; /* Opera 10.5, IE 9 */
+  display: inline-block;
+  height: 8px;
+  margin: 1px;
+  text-indent: -999px;
+  text-align: left;
+  width: 8px;
+}
+.card > .orbs > .orb1 {
+  background-color: gray;
+  /*
+  border: 2px solid gray;
+  height: 4px;
+  width: 4px;
+  */
+}
+.card > .orbs > .orbB {
+  background-color: #3d91f5;
+}
+.card > .orbs > .orbS {
+  background-color: #b207ff;
+}
+.card > .orbs > .orbR {
+  background-color: red;
+}
+.card > .orbs > .orbN {
+  background-color: #80d133;
+}
+.card > .offense {
+  font-size: 13px;
+  left: 40px;
+  position: absolute;
+  top: 246px;
+}
+.card > .defense {
+  font-size: 13px;
+  left: 120px;
+  position: absolute;
+  top: 246px;
+}
+.card > .category {
+  font-size: 12px;
+  left: 16px;
+  position: absolute;
+  top: 158px;
+}
+.card > .abilities {
+  font-size: 11px;
+  left: 32px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 180px;
+}
+.card > .tooltip {
+     -moz-border-radius: 3px; /* FF1+ */
+  -webkit-border-radius: 3px; /* Saf3+, Chrome */
+          border-radius: 3px; /* Opera 10.5, IE 9 */
+  border: 1px solid #7695a7;
+
+  background-color: #16285F;
+  background-color: rgba(22, 40, 95, 0.8);  /* FF3+, Saf3+, Opera 10.10+, Chrome */
+            filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#CC16285F',EndColorStr='#CC16285F'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#CC16285F',EndColorStr='#CC16285F')"; /* IE8 */
+  display: none;
+  font-family: Verdana;
+  font-size: 12px;
+  left: 200px;
+  top: 4px;
+  padding: 4px;
+  position: absolute;
+  text-shadow: 0 0 2px black;
+  width: 300px;
+  z-index: 99;
+}
+.tooltip > dl {
+  margin: 0;
+}
+.tooltip dt {
+  color: yellow;
+  font-size: 12px;
+  margin-top: 0.5em;
+}
+.tooltip dd {
+  color: #eee;
+  font-size: 11px;
+  margin: 0;
+  padding: 0;
+}
+.tooltip > h3 {
+  margin: 0;
+  padding: 0;
+}
+.tooltip > h4 {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+.replaced { display: none; }
+
+#decks {
+  background-color: #0A0A0A;
+  background-color: rgba(10, 10, 10, 0.8);  /* FF3+, Saf3+, Opera 10.10+, Chrome */
+            filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#990A0A0A',EndColorStr='#990A0A0A'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#990A0A0A',EndColorStr='#990A0A0A')"; /* IE8 */
+  border-top: 1px solid #695A3E;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+}
+.deck {
+  border: 1px solid #695A3E;
+  height: 100px;
+  margin: 2px 32px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px;
+  white-space: nowrap;
+  position: relative;
+}
+  #addDeck {
+    background: transparent url(img/btn_s_replay_speed_plus_up.png) no-repeat;
+    text-align: left;
+    text-indent: -9999em;
+    width: 31px;
+    height: 31px;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  #addDeck:hover {
+    background-image: url(img/btn_s_replay_speed_plus_over.png);
+  }
+  #addDeck:active {
+    background-image: url(img/btn_s_replay_speed_plus_down.png);
+  }
+  .handle {
+    position: absolute;
+    right: 0px;
+    width: 15px;
+    height: 28px;
+    background: transparent url(img/btn_m_inventory_dropdown_up.png) no-repeat;
+    cursor: move;
+    top: 0;
+  }
+  .deck.hide {
+    height: 21px;
+    overflow-x: hidden;
+  }
+  .deckControls {
+    display: inline-block;
+    vertical-align: top;
+    width: 106px;
+    white-space: normal;
+  }
+    .deckControls .deckname {
+      font-size: 10px;
+      width: 80px;
+    }
+    .deckControls .deckSize {
+      background-color: #444;
+      font-size: 10px;
+      margin-left: 1px;
+      text-align: center;
+      width: 13px;
+    }
+    .deckControls > .button {
+      background: transparent no-repeat;
+      display: inline-block;
+      height: 28px;
+      text-align: left;
+      text-indent: -9999em;
+      margin: 1px 0;
+      width: 28px;
+    }
+    .button.hide {
+      background-image: url(img/btn_m_inventory_dropdown_up.png);
+      width: 15px;
+    }
+    .button.hide:hover {
+      background-image: url(img/btn_m_inventory_dropdown_over.png);
+    }
+    .button.hide:active {
+      background-image: url(img/btn_m_inventory_dropdown_down.png);
+    }
+    .button.zoom {
+      background-image: url(img/btn_m_inventory_search_icon_up.png);
+    }
+    .button.zoom:hover {
+      background-image: url(img/btn_m_inventory_search_icon_over.png);
+    }
+    .button.zoom:active {
+      background-image: url(img/btn_m_inventory_search_icon_down.png);
+    }
+    .button.share {
+      background-image: url(img/btn_s_mainmenu_mail_up.png);
+    }
+    .button.share:hover {
+      background-image: url(img/btn_s_mainmenu_mail_over.png);
+    }
+    .button.share:active {
+      background-image: url(img/btn_s_mainmenu_mail_down.png);
+    }
+    .button.delete {
+      background-image: url(img/btn_deckbuilder_clearall_up.png);
+    }
+    .button.delete:hover {
+      background-image: url(img/btn_deckbuilder_clearall_over.png);
+    }
+    .button.delete:active {
+      background-image: url(img/btn_deckbuilder_clearall_down.png);
+    }
+ .deckCards {
+    display: inline-block;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+    .deckCard { display: inline-block; }
+    .deckCards img {
+      width: 71px;
+      height: 97px;
+    }
+    .deckCards .ui-sortable-placeholder {
+         -moz-border-radius: 8px; /* FF1+ */
+      -webkit-border-radius: 8px; /* Saf3+, Chrome */
+              border-radius: 8px; /* Opera 10.5, IE 9 */
+      border: 2px dashed red;
+      visibility: visible !important; /* override jqueryui */
+      height: 90px;
+    }
+
+
+#help {
+  display: none;
+  background-color: #0A0A0A;
+  background-color: rgba(10, 10, 10, 0.8);  /* FF3+, Saf3+, Opera 10.10+, Chrome */
+            filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#990A0A0A',EndColorStr='#990A0A0A'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#990A0A0A',EndColorStr='#990A0A0A')"; /* IE8 */
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 200;
+}
+#help > div {
+  margin: 0 auto;
+}
+
+footer {
+  font-size: 0.8em;
+  margin-top: 1em;
+  text-align: center;
+}
+
+
+
+.lite .card > img, .lite #decks { display: none; }
