@@ -4,62 +4,9 @@
 
 
 /* IE and older browser compatibility */
-if (!Array.prototype.forEach)
-{
-  Array.prototype.forEach = function(fun /*, thisp*/)
-  {
-    var len = this.length >>> 0;
-    if (typeof fun != "function")
-      throw new TypeError();
-
-    var thisp = arguments[1];
-    for (var i = 0; i < len; i++)
-    {
-      if (i in this)
-        fun.call(thisp, this[i], i, this);
-    }
-  };
-}
-if (!Array.prototype.map)
-{
-  Array.prototype.map = function(fun /*, thisp*/)
-  {
-    var len = this.length >>> 0;
-    if (typeof fun != "function")
-      throw new TypeError();
-
-    var res = new Array(len);
-    var thisp = arguments[1];
-    for (var i = 0; i < len; i++)
-    {
-      if (i in this)
-        res[i] = fun.call(thisp, this[i], i, this);
-    }
-
-    return res;
-  };
-}
-if (!Array.prototype.some)
-{
-  Array.prototype.some = function(fun /*, thisp*/)
-  {
-    var i = 0,
-        len = this.length >>> 0;
-
-    if (typeof fun != "function")
-      throw new TypeError();
-
-    var thisp = arguments[1];
-    for (; i < len; i++)
-    {
-      if (i in this &&
-          fun.call(thisp, this[i], i, this))
-        return true;
-    }
-
-    return false;
-  };
-}
+if(!Array.prototype.forEach){Array.prototype.forEach=function(fun){var len=this.length>>>0;if(typeof fun!="function")throw new TypeError();var thisp=arguments[1];for(var i=0;i<len;i++){if(i in this)fun.call(thisp,this[i],i,this)}}}
+if(!Array.prototype.map){Array.prototype.map=function(fun){var len=this.length>>>0;if(typeof fun!="function")throw new TypeError();var res=new Array(len);var thisp=arguments[1];for(var i=0;i<len;i++){if(i in this)res[i]=fun.call(thisp,this[i],i,this)}return res}}
+if(!Array.prototype.some){Array.prototype.some=function(fun){var i=0,len=this.length>>>0;if(typeof fun!="function")throw new TypeError();var thisp=arguments[1];for(;i<len;i++){if(i in this&&fun.call(thisp,this[i],i,this))return true}return false}}
 if (!Storage.prototype.setObject)
 {
   Storage.prototype.setObject = function(key, value) {
@@ -80,6 +27,12 @@ function getUrlVars() {
 		map[key] = value;
 	});
 	return map;
+}
+function simplyCopy(obj){
+  var temp = {};
+  for(var key in obj)
+      temp[key] = obj[key];
+  return temp;
 }
 
 /* debugging */
@@ -118,11 +71,17 @@ callSearch = {
       showRXL = $('#offense-rxl').is(':checked'),
       showSpecial = $('#offense-special').is(':checked');
 
-    var orbsR = $('#toolbar .m2 > input.fire:checked').length;
-    var orbsS = $('#toolbar .m2 > input.shadow:checked').length;
-    var orbsB = $('#toolbar .m2 > input.frost:checked').length;
-    var orbsN = $('#toolbar .m2 > input.nature:checked').length;
-    var orbsTotal = orbsR + orbsS + orbsB + orbsN;
+    var m2CB = $('#method2 input:not(.none)');  //cache this
+    var m2Orbs = {
+      fire   : m2CB.filter('.fire:checked').length,
+      shadow : m2CB.filter('.shadow:checked').length,
+      frost  : m2CB.filter('.frost:checked').length,
+      nature : m2CB.filter('.nature:checked').length
+    }
+    var m2OrbsCheck = simplyCopy(m2Orbs);
+    var lastOrb = m2CB.filter(':checked:last').attr('class');
+    if (lastOrb) --m2OrbsCheck[lastOrb];
+    var orbsTotal = m2Orbs.fire + m2Orbs.shadow + m2Orbs.frost + m2Orbs.nature;
 
     var editionSearch = 0;
     $('#editionSearch > input').each(function(){ editionSearch += this.value * $(this).is(':checked'); });
@@ -134,7 +93,7 @@ callSearch = {
       //todo break out when we get a false to skip more expensive checks
       var matchName = (!name || card.searchName.indexOf(name) !== -1);
       //debug(card.orb);
-      if (searchMethod) {
+      if (searchMethod) { // filter cards the same way the game does
         var matchOrbType = orbSearch == (orbSearch | card.orb_id);
 
         var matchEra = 
@@ -143,14 +102,22 @@ callSearch = {
           (showEra3 && (card.orb_n == 3)) ||
           (showEra4 && (card.orb_n == 4));
       
-      } else {
+      } else {  // filter cards by era
         var matchOrbType = true;
 
         var matchEra = (card.orb_n <= orbsTotal) &&
-          ((card.orb.match(/R/g) || '').length <= orbsR) &&
-          ((card.orb.match(/S/g) || '').length <= orbsS) &&
-          ((card.orb.match(/B/g) || '').length <= orbsB) &&
-          ((card.orb.match(/N/g) || '').length <= orbsN);
+          ((card.orb.match(/R/g) || '').length <= m2Orbs.fire) &&
+          ((card.orb.match(/S/g) || '').length <= m2Orbs.shadow) &&
+          ((card.orb.match(/B/g) || '').length <= m2Orbs.frost) &&
+          ((card.orb.match(/N/g) || '').length <= m2Orbs.nature);
+        if (lastOrb) {
+          var usedToMatchEra = (card.orb_n <= orbsTotal) &&
+            ((card.orb.match(/R/g) || '').length <= m2OrbsCheck.fire) &&
+            ((card.orb.match(/S/g) || '').length <= m2OrbsCheck.shadow) &&
+            ((card.orb.match(/B/g) || '').length <= m2OrbsCheck.frost) &&
+            ((card.orb.match(/N/g) || '').length <= m2OrbsCheck.nature);
+          matchEra = matchEra && !usedToMatchEra;
+        }
       }
 
       var matchType = 
@@ -199,7 +166,6 @@ callSearch = {
       window.clearTimeout(callSearch.timer);
     }
     callSearch.timer = window.setTimeout(callSearch._search,30);
-  
   },
 };
 
