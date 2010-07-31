@@ -37,7 +37,7 @@ function simplyCopy(obj){
 
 /* debugging */
 function debug() { var msg = []; for (var i = 0, n = arguments.length; i<n; ++i) msg.push(arguments[i]); setTimeout(function() { throw new Error("[debug] " + msg.join(' ')); }, 0);}
-//window.log=function(){var a="history";log[a]=log[a]||[];log[a].push(arguments);window.console&&console.log[console.firebug?"apply":"call"](console,Array.prototype.slice.call(arguments))};window.logargs=function(a){log(a,arguments.callee.caller.arguments)};
+window.log=function(){var a="history";log[a]=log[a]||[];log[a].push(arguments);window.console&&console.log[console.firebug?"apply":"call"](console,Array.prototype.slice.call(arguments))};window.logargs=function(a){log(a,arguments.callee.caller.arguments)};
 
 
 /* search for a card based on the user's search parameters */
@@ -571,6 +571,23 @@ $(function(){
     if (loaded.lootDB = !!lootDB) $('#loading-loot').fadeOut(200).remove();
     initCanvas();
   }
+  // allow unloading cards
+  $('#resetDB').click(function(){
+    if (enableDb) {
+      delete localStorage.cardDB;
+      delete localStorage.cardAbilities;
+      delete localStorage.lootDB;
+      setTimeout(function(){ document.location.reload(); },1);
+    }
+    return false;
+  });
+  $('#reset').click(function(){
+    if (enableDb && confirm('This will reset all preferences, decks, and cached values (but not card images)')) {
+      localStorage.clear();
+      setTimeout(function(){ document.location.reload(); },1);
+    }
+    return false;
+  });
   
   if (!cardDB) {
     cardDB = [];
