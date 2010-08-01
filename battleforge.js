@@ -89,6 +89,7 @@ callSearch = {
     var orbSearch = 0;
     $('#orbSearch > input').each(function(){ orbSearch += this.value * $(this).is(':checked'); });
     
+    //debug(matchEra,usedToMatchEra,orbsTotal);
     cardDB.forEach(function(card){
       //todo break out when we get a false to skip more expensive checks
       var matchName = (!name || card.searchName.indexOf(name) !== -1);
@@ -111,7 +112,7 @@ callSearch = {
           ((card.orb.match(/B/g) || '').length <= m2Orbs.frost) &&
           ((card.orb.match(/N/g) || '').length <= m2Orbs.nature);
         if (lastOrb) {
-          var usedToMatchEra = (card.orb_n <= orbsTotal) &&
+          var usedToMatchEra = (card.orb_n < orbsTotal) &&
             ((card.orb.match(/R/g) || '').length <= m2OrbsCheck.fire) &&
             ((card.orb.match(/S/g) || '').length <= m2OrbsCheck.shadow) &&
             ((card.orb.match(/B/g) || '').length <= m2OrbsCheck.frost) &&
