@@ -88,7 +88,7 @@ callSearch = {
 
     var orbSearch = 0;
     $('#orbSearch > input').each(function(){ orbSearch += this.value * $(this).is(':checked'); });
-    
+
     //debug(matchEra,usedToMatchEra,orbsTotal);
     cardDB.forEach(function(card){
       //todo break out when we get a false to skip more expensive checks
@@ -97,12 +97,12 @@ callSearch = {
       if (searchMethod) { // filter cards the same way the game does
         var matchOrbType = orbSearch == (orbSearch | card.orb_id);
 
-        var matchEra = 
+        var matchEra =
           (showEra1 && (card.orb_n == 1)) ||
           (showEra2 && (card.orb_n == 2)) ||
           (showEra3 && (card.orb_n == 3)) ||
           (showEra4 && (card.orb_n == 4));
-      
+
       } else {  // filter cards by era
         var matchOrbType = true;
 
@@ -121,19 +121,19 @@ callSearch = {
         }
       }
 
-      var matchType = 
+      var matchType =
         (showUnits     && (card.type_id == 0)) ||
         (showBuildings && (card.type_id == 1)) ||
         (showSpells    && (card.type_id == 2));
 
-      var matchRarity = 
+      var matchRarity =
         (showCommons    && (card.rarity == "C")) ||
         (showUncommons  && (card.rarity == "U")) ||
         (showRares      && (card.rarity == "R")) ||
         (showUltrarares && (card.rarity == "UR"));
 
       var matchEdition = editionSearch & card.edition_id;
-      
+
       var matchSize = (card.type_id != 0) || (
           (showS  && (card.defensetype == 's')) ||
           (showM  && (card.defensetype == 'm')) ||
@@ -151,19 +151,19 @@ callSearch = {
           (showRXL && (card.offensetype == 'rxl')) ||
           (showSpecial && (card.offensetype == 'special'))
         );
-      
+
 
       if (matchName && matchOrbType && matchEra && matchType && matchRarity && matchEdition && matchSize && matchOffense) card.jQuery.show();
       else {
         card.jQuery.hide();
         //debug('hiding',card.name,matchSize,card.defensetype,matchOffense,card.offensetype);
       }
-    
+
     });
     updateCardCount();
   },
   search : function(){
-    if (callSearch.timer) { 
+    if (callSearch.timer) {
       window.clearTimeout(callSearch.timer);
     }
     callSearch.timer = window.setTimeout(callSearch._search,30);
@@ -203,7 +203,7 @@ jQuery.fn.replaceCB = function(options){
       replacement.attr('src',options.unchecked);
     }
   }
-  
+
   return this.each(function(){
     //debug(this);
     var cbOption;
@@ -305,7 +305,7 @@ function initCanvas(){
         lootTooltip += 'u' + map.era + ' : ' + map.map + ' ' + map.players + 'p<br>';
       });
     }
-    
+
     var orbHTML = '';
     for (var i = 0; i < card.orb.length; i++){
       orbHTML += '<span class="orb'+card.orb[i]+'">'+card.orb[i]+'</span>';
@@ -356,7 +356,7 @@ $(function(){
       callSearch.search();
     },1);
   });
-  
+
   $('#toolbar > form').submit(function(){
     return false;
   });
@@ -509,8 +509,8 @@ $(function(){
     unchecked : 'img/btn_s_tickbox_up.png',
     uncheckedHover : 'img/btn_s_tickbox_over.png',
   });
-  
-  
+
+
   $('#attach').click(function(){
     $('#toolbar').toggleClass('float');
     //$toolbar.css('position',$toolbar.css('position') == 'absolute' ? 'fixed' : 'absolute');
@@ -589,11 +589,11 @@ $(function(){
     }
     return false;
   });
-  
+
   if (!cardDB) {
     cardDB = [];
     $.ajax({
-      url: 'http://spreadsheets.google.com/feeds/list/tT1WZZWP3cl5DUr8Aqwf68A/od6/public/basic?alt=json-in-script',
+      url: 'https://spreadsheets.google.com/feeds/list/tT1WZZWP3cl5DUr8Aqwf68A/od6/public/basic?alt=json-in-script',
       dataType: 'jsonp',
       cache: 'true',
       success: function (data, textStatus, XMLHttpRequest){
@@ -632,7 +632,7 @@ $(function(){
   if (!cardAbilities) {
     cardAbilities = {};
     $.ajax({
-      url: 'http://spreadsheets.google.com/feeds/list/tff7StVG7UhAk2_MjaV2RaA/od6/public/basic?alt=json-in-script',
+      url: 'https://spreadsheets.google.com/feeds/list/tff7StVG7UhAk2_MjaV2RaA/od6/public/basic?alt=json-in-script',
       dataType: 'jsonp',
       cache: 'true',
       success: function (data){
@@ -663,7 +663,7 @@ $(function(){
   if (!lootDB) {
     lootDB = {};
     $.ajax({
-      url: 'http://spreadsheets.google.com/feeds/list/0AnvTOLnTve5fdG9Tb3RqVG44WVkwQmxXT2QzU1A2WGc/od7/public/basic?alt=json-in-script',
+      url: 'https://spreadsheets.google.com/feeds/list/0AnvTOLnTve5fdG9Tb3RqVG44WVkwQmxXT2QzU1A2WGc/od7/public/basic?alt=json-in-script',
       dataType: 'jsonp',
       cache: 'true',
       success: function (data, textStatus, XMLHttpRequest){
@@ -753,7 +753,7 @@ if (enableDeckBuilding) {
     });
     localStorage.setObject('userDecks',decks);
   }
-  
+
   function loadDecks(){
     var decks = localStorage.getObject('userDecks') ||
       [{"name":"swift","className":"deck active","cards":["Amazon_frost","Amazon_nature","Burrower","Bandit-Stalker_nature","Bandit-Stalker_shadow","Dreadcharger","Fire-Stalker","Giant-Slayer","Lyrish-Knight","Lyrish-Knight-promo","Nightcrawler","Nightguard_nature","Nomad_nature","Nomad_fire","Scavenger","Scythe-Fiends","Shadow-Insect","Silverwind-Lancers","Stormsinger_nature","Strikers","Swiftclaw","Werebeasts"]}];
@@ -800,7 +800,7 @@ if (enableDeckBuilding) {
       var n_cards = $('.deckCards img',$deck).length;
       if ((n_cards == 0) || confirm("Delete Deck? This deck has "+n_cards+" card(s).")) {
         $deck.remove();
-        saveDecks(); 
+        saveDecks();
         $('#footer').css('margin-bottom',$('#decks').outerHeight() + 'px');
       }
     });
